@@ -1,28 +1,30 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ListNgZorroAntdModule } from './ng-zorro-antd.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { NgModule } from '@angular/core';
+import { ListNgZorroAntdModule } from './list-ng-zorro-antd.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TicketsFormComponent } from './components/tickets-form/tickets-form.component';
+import { RouterLink } from '@angular/router';
 
+const components = [
+  TicketsFormComponent
+]
 @NgModule({
   imports: [
-    CommonModule,
-    FormsModule,
     ReactiveFormsModule,
     ListNgZorroAntdModule,
-    BrowserAnimationsModule,
     ScrollingModule,
-    DragDropModule
+    DragDropModule,
+    RouterLink,
+    ...components
   ],
   exports:[
-    FormsModule,
     ReactiveFormsModule,
     ListNgZorroAntdModule,
-    BrowserAnimationsModule,
     ScrollingModule,
-    DragDropModule
+    DragDropModule,
+    RouterLink,
+    ...components
   ],
   declarations: []
 })

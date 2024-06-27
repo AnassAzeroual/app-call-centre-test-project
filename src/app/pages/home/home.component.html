@@ -1,1 +1,54 @@
-<p>Home works!</p>
+<div class="container">
+  <div class="breadcrumb">
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>Home</nz-breadcrumb-item>
+      <nz-breadcrumb-item><a>liste d'appels</a></nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </div>
+
+  <div class="table-container">
+    <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="listOfData"
+      (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
+      <thead>
+        <tr>
+          <th [nzSelections]="listOfSelection" [(nzChecked)]="checked" [nzIndeterminate]="indeterminate"
+            (nzCheckedChange)="onAllChecked($event)"></th>
+          <th>Numéro</th>
+          <th>Date</th>
+          <th>Heure</th>
+          <th>Durée</th>
+          <th>Type d'appel</th>
+          <th>Statut</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (data of rowSelectionTable.data;track data.id) {
+        <tr>
+          <td [nzChecked]="setOfCheckedId.has(data.id)" (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
+          <td>{{ data.numero }}</td>
+          <td>{{ data.date }}</td>
+          <td>{{ data.heure }}</td>
+          <td>{{ data.duree }}</td>
+          <td>{{ data.typeAppel }}</td>
+          <td>
+            @if (data.statut !== '-') {
+            <button nz-button [routerLink]="[ '/tickets/add', data.id]" [queryParams]="{ type: 'update' }"
+              [nzTooltipTitle]="'Modifier le ticket : ' + data.numero" nz-tooltip>
+              {{data.statut}}
+            </button>
+            }
+          </td>
+          <td>
+            <button nz-button nzType="primary" [routerLink]="[ '/tickets/add', data.id]" [queryParams]="{ type: 'add' }"
+              [nzTooltipTitle]="'Ajouter le ticket : ' + data.numero" nz-tooltip>
+              <span nz-icon nzType="plus" nzTheme="outline"></span>
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </nz-table>
+
+  </div>
+</div>

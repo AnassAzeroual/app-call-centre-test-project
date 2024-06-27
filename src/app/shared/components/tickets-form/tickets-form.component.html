@@ -1,0 +1,36 @@
+<div class="back">
+  <button nz-button nzType="primary" [nzSize]="'large'" nzShape="circle" (click)="goBack()">
+    <span nz-icon nzType="arrow-left" nzTheme="outline"></span>
+  </button>
+</div>
+<div class="create-ticket-container">
+  <h2>{{formType}} de Ticket</h2>
+  <form [formGroup]="ticketForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="sujet">Ticket:</label>
+      <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a person" formControlName="ticket">
+        <nz-option nzLabel="en cours" nzValue="en cours"></nz-option>
+        <nz-option nzLabel="résolu" nzValue="résolu"></nz-option>
+        <nz-option nzLabel="annulé" nzValue="annulé"></nz-option>
+        <nz-option nzLabel="-" nzValue="-"></nz-option>
+      </nz-select>
+    </div>
+    <div class="form-group">
+      <label for="nom">Nom:</label>
+      <input type="text" formControlName="nom" id="nom" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" formControlName="email" id="email" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="sujet">Sujet:</label>
+      <input type="text" formControlName="sujet" id="sujet" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <textarea formControlName="description" id="description" class="form-control" rows="5" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Valider le ticket</button>
+  </form>
+</div>

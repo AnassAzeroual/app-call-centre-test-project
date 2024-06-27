@@ -9,31 +9,24 @@
           <img src="../assets/logo_headphone.jpg" alt="logo">
           <h1>TicketFacile</h1>
       </div>
-      <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-        <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
+      <ul nz-menu nzTheme="dark" nzMode="inline"  [nzInlineCollapsed]="isCollapsed">
+        <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard" >
           <ul>
             <li nz-menu-item nzMatchRouter>
-              <a routerLink="/accueil">accueil</a>
+              <a routerLink="/home">Accueil</a>
             </li>
             <li nz-menu-item nzMatchRouter>
-              <a routerLink="/tickets" >tickets</a>
+              <a routerLink="/tickets" >Tickets</a>
             </li>
             <li nz-menu-item nzMatchRouter>
-              <a>Workplace</a>
-            </li>
-          </ul>
-        </li>
-        <li nz-submenu nzOpen nzTitle="Form" nzIcon="form">
-          <ul>
-            <li nz-menu-item nzMatchRouter>
-              <a>Basic Form</a>
+              <a routerLink="/calls" >Enregistrement des Appels</a>
             </li>
           </ul>
         </li>
       </ul>
     </nz-sider>
-  
-    
+
+
     <nz-layout>
       <nz-header>
         <div class="app-header">
@@ -52,4 +45,3 @@
       </nz-content>
     </nz-layout>
   </nz-layout>
-  

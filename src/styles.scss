@@ -1,1 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+// table.component.scss
+nz-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+  
+    thead {
+      background-color: #051c35;
+      color: white;
+  
+      th {
+        padding: 10px;
+        text-align: left;
+      }
+    }
+  
+    tbody {
+      tr {
+        border-bottom: 1px solid #ccc;
+  
+        &:nth-child(even) {
+          background-color: #f2f2f2;
+        }
+  
+        td {
+          padding: 10px;
+        }
+      }
+    }
+  }
+  .back{
+    text-align: end;
+    margin-bottom: 5px;
+  }
