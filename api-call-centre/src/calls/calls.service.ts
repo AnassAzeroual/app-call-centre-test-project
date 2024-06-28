@@ -1,12 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Calls } from 'entities/Calls';
+import { Tickets } from 'entities/Tickets';
 import { Repository } from 'typeorm';
 
 
 @Injectable()
 export class CallsService {
-    constructor(@InjectRepository(Calls) private repoCalls: Repository<Calls>){}
+    constructor(
+        @InjectRepository(Calls) private repoCalls: Repository<Calls>,
+        @InjectRepository(Tickets) private repoTickets: Repository<Tickets>,
+    ){}
 
     async getAllCalls(): Promise<Calls[]> {
         return await this.repoCalls.find();

@@ -6,6 +6,7 @@ import { APP_FILTER } from '@nestjs/core';
 import { HttpExceptionFilter } from './http-exception.filter';
 import { AuthModule } from './auth/auth.module';
 import { CallsModule } from './calls/calls.module';
+import { TicketsModule } from './tickets/tickets.module';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { CallsModule } from './calls/calls.module';
       ]
     }),
     AuthModule,
-    CallsModule
+    CallsModule,
+    TicketsModule
   ],
   controllers: [AppController],
   providers: [AppService,{

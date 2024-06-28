@@ -1,8 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { CallsService } from './calls.service';
 import { Calls } from 'entities/Calls';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('calls')
+@UseGuards(AuthGuard())
 export class CallsController {
     constructor(private readonly callsService: CallsService) { }
 
