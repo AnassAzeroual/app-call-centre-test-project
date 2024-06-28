@@ -6,8 +6,8 @@ export class AuthController {
     constructor(private srvUser: AuthService) { }
 
     @Post('/signin')
-    signup(@Body() data: { email: string; password: string; }): Promise<{ accessToken: string }> {
-        return this.srvUser.signIn(data)
+    signup(@Body() data: { login: string; password: string; }): Promise<{ accessToken: string }> {
+        return this.srvUser.signup(data)
     }
 
 }
