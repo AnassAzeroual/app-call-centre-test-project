@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_FILTER } from '@nestjs/core';
 import { HttpExceptionFilter } from './http-exception.filter';
 import { AuthModule } from './auth/auth.module';
+import { CallsModule } from './calls/calls.module';
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { AuthModule } from './auth/auth.module';
         "./entities/*{.ts,.js}"
       ]
     }),
-    AuthModule
+    AuthModule,
+    CallsModule
   ],
   controllers: [AppController],
   providers: [AppService,{

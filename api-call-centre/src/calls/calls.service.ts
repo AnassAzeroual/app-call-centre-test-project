@@ -1,43 +1,41 @@
 import { Injectable } from '@nestjs/common';
-import { AppService, Call } from 'src/app.service';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Calls } from 'entities/Calls';
+import { Repository } from 'typeorm';
 
 
 @Injectable()
 export class CallsService {
-    constructor(private srvState:AppService){}
+    constructor(@InjectRepository(Calls) private repoCalls: Repository<Calls>){}
 
-    getAllCalls(): Call[] {
-        return this.srvState.calls;
+    async getAllCalls(): Promise<Calls[]> {
+        return await this.repoCalls.find();
     }
 
-    async getCallById(id: number): Promise<Call | undefined> {
-        return await this.srvState.calls.find((call) => call.id === Number(id));
+    async getCallById(id: number): Promise<Calls | undefined> {
+        return await this.repoCalls.findOne({where:{callId:+id}});
     }
 
-    createCall(call: Call): Call {
-        const newCall = { id: this.srvState.calls.length + 1, ...call };
-        this.srvState.calls.push(newCall);
-        return newCall;
+    createCall(call: Calls): Calls {
+        return this.repoCalls.create(call);
     }
 
-    async updateCall(id: number, call: Partial<Call>): Promise<Call | undefined> {
-        const originalcall = await this.getCallById(id);
-        console.log(originalcall)
-        for (let key in call) {
-            if (originalcall.hasOwnProperty(key)) {
-                originalcall[key] = call[key];
-            }
-            console.log(originalcall)
-          }
-        return await originalcall;
+    async updateCall(id: number, newData: Partial<Calls>): Promise<Calls | undefined> {
+        const data = await this.repoCalls.findOne({where:{callId:id}})
+
+        Object.keys(newData).forEach((key) => {
+            data[key] = newData[key];
+        });
+
+        const res = await this.repoCalls.save(data)
+        return res
     }
 
-    deleteCall(id: number): boolean {
-        const callIndex = this.srvState.calls.findIndex((call) => call.id === Number(id));
-        if (callIndex !== -1) {
-            this.srvState.calls.splice(callIndex, 1);
-            return true;
-        }
-        return false;
+    async deleteCall(id: number): Promise<boolean> {
+        const data = await this.repoCalls.findOne({where:{callId:id}})
+        data.deleted = true;
+
+        const res = await this.repoCalls.save(data)
+        return !!res
     }
 }
