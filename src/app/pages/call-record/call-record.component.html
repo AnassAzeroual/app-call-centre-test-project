@@ -13,11 +13,18 @@
   <form [formGroup]="callForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="sujet">Ticket:</label>
-      <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a person" formControlName="ticket">
+      <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a ticket" formControlName="ticket">
         <nz-option nzLabel="en cours" nzValue="en cours"></nz-option>
         <nz-option nzLabel="résolu" nzValue="résolu"></nz-option>
         <nz-option nzLabel="annulé" nzValue="annulé"></nz-option>
-        <nz-option nzLabel="-" nzValue="-"></nz-option>
+      </nz-select>
+    </div>
+    <div class="form-group">
+      <label for="sujet">type:</label>
+      <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a call type" formControlName="type">
+        <nz-option nzLabel="Manqué" nzValue="Manqué"></nz-option>
+        <nz-option nzLabel="Entrant" nzValue="Entrant"></nz-option>
+        <nz-option nzLabel="Sortant" nzValue="Sortant"></nz-option>
       </nz-select>
     </div>
     <div class="form-group">

@@ -25,23 +25,25 @@
       <tbody>
         @for (data of rowSelectionTable.data;track data.id) {
         <tr>
-          <td [nzChecked]="setOfCheckedId.has(data.id)" (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
-          <td>{{ data.numero }}</td>
-          <td>{{ data.date }}</td>
-          <td>{{ data.heure }}</td>
-          <td>{{ data.duree }}</td>
-          <td>{{ data.typeAppel }}</td>
+          <td [nzChecked]="setOfCheckedId.has(data.id!)" (nzCheckedChange)="onItemChecked(data.id!, $event)"></td>
+          <td>{{ data.number }}</td>
+          <td>{{ data.date | date:'dd-MM-yyyy' }}</td>
+          <td>{{ data.time }}</td>
+          <td>{{ data.duration }}</td>
+          <td>{{ data.type }}</td>
           <td>
-            @if (data.statut !== '-') {
+            @if (data.status !== '-') {
             <button nz-button [routerLink]="[ '/tickets/add', data.id]" [queryParams]="{ type: 'update' }"
-              [nzTooltipTitle]="'Modifier le ticket : ' + data.numero" nz-tooltip>
-              {{data.statut}}
+              [nzTooltipTitle]="'Modifier le ticket : ' + data.number" nz-tooltip>
+              {{data.status}}
             </button>
+          }@else{
+              {{data.status}}
             }
           </td>
           <td>
             <button nz-button nzType="primary" [routerLink]="[ '/tickets/add', data.id]" [queryParams]="{ type: 'add' }"
-              [nzTooltipTitle]="'Ajouter le ticket : ' + data.numero" nz-tooltip>
+              [nzTooltipTitle]="'Ajouter le ticket : ' + data.number" nz-tooltip>
               <span nz-icon nzType="plus" nzTheme="outline"></span>
             </button>
           </td>
