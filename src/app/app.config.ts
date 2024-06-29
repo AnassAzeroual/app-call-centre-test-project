@@ -9,10 +9,14 @@ import { registerLocaleData } from '@angular/common';
 import fr from '@angular/common/locales/fr';
 import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { tokenInterceptor } from './shared/services/token-interceptor.service';
 
 registerLocaleData(fr);
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideClientHydration(), provideNzIcons(), provideNzI18n(fr_FR), importProvidersFrom(FormsModule), provideAnimationsAsync(), provideHttpClient()]
+  providers: [provideRouter(routes),
+  provideClientHydration(), provideNzIcons(),
+  provideNzI18n(fr_FR), importProvidersFrom(FormsModule),
+  provideAnimationsAsync(),provideHttpClient(withInterceptors([tokenInterceptor]))]
 };

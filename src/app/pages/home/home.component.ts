@@ -2,11 +2,12 @@ import { DatePipe, NgFor, NgIf } from "@angular/common";
 import { Component, OnInit } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
 import { Calls } from "../../shared/models/calls.model";
+import { CallsService } from "./calls.service";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgIf,NgFor,SharedModule,DatePipe],
+  imports: [NgIf, NgFor, SharedModule, DatePipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -39,7 +40,7 @@ export class HomeComponent implements OnInit {
   listOfData: readonly Calls[] = [];
   setOfCheckedId = new Set<number>();
 
-  constructor(){}
+  constructor(private srv: CallsService) { }
 
   updateCheckedSet(id: number, checked: boolean): void {
     if (checked) {
@@ -70,8 +71,8 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.srv.getAllCalls().subscribe((res:any) => {
-    //   this.listOfData = res;
-    // })
+    this.srv.getAllCalls().subscribe((res:any) => {
+      this.listOfData = res;
+    })
   }
 }

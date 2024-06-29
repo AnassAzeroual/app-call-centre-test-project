@@ -18,32 +18,32 @@
           <th>Heure</th>
           <th>Durée</th>
           <th>Type d'appel</th>
-          <th>Statut</th>
+          <th>Tickets</th>
           <th>Action</th>
         </tr>
       </thead>
       <tbody>
-        @for (data of rowSelectionTable.data;track data.id) {
+        @for (data of rowSelectionTable.data;track data.callId) {
         <tr>
-          <td [nzChecked]="setOfCheckedId.has(data.id!)" (nzCheckedChange)="onItemChecked(data.id!, $event)"></td>
-          <td>{{ data.number }}</td>
-          <td>{{ data.date | date:'dd-MM-yyyy' }}</td>
-          <td>{{ data.time }}</td>
-          <td>{{ data.duration }}</td>
-          <td>{{ data.type }}</td>
+          <td [nzChecked]="setOfCheckedId.has(data.callId)" (nzCheckedChange)="onItemChecked(data.callId, $event)"></td>
+          <td>{{ data.phoneNumber }}</td>
+          <td>{{ data.callDate | date:'dd-MM-yyyy' }}</td>
+          <td>{{ data.callDate | date:'HH:mm:ss'}}</td>
+          <td>{{ data.callDuration }}</td>
+          <td>{{ data.callType }}</td>
           <td>
-            @if (data.status !== '-') {
-            <button nz-button [routerLink]="[ '/tickets/add', data.id]" [queryParams]="{ type: 'update' }"
+            <!-- @if (data.status !== '-') {
+            <button nz-button [routerLink]="[ '/tickets/add', data.callId]" [queryParams]="{ type: 'update' }"
               [nzTooltipTitle]="'Modifier le ticket : ' + data.number" nz-tooltip>
               {{data.status}}
             </button>
           }@else{
               {{data.status}}
-            }
+            } -->
           </td>
           <td>
-            <button nz-button nzType="primary" [routerLink]="[ '/tickets/add', data.id]" [queryParams]="{ type: 'add' }"
-              [nzTooltipTitle]="'Ajouter le ticket : ' + data.number" nz-tooltip>
+            <button nz-button nzType="primary" [routerLink]="[ '/tickets/add', data.callId]" [queryParams]="{ type: 'add' }"
+              [nzTooltipTitle]="'Ajouter le ticket : ' + data.phoneNumber" nz-tooltip>
               <span nz-icon nzType="plus" nzTheme="outline"></span>
             </button>
           </td>

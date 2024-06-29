@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Calls } from 'entities/Calls';
 import { Tickets } from 'entities/Tickets';
+import { CreateCallDto } from 'src/DTOs/calls.dto';
+import { UpdateCallDto } from 'src/DTOs/update.dto';
 import { Repository } from 'typeorm';
 
 
@@ -12,19 +14,19 @@ export class CallsService {
         @InjectRepository(Tickets) private repoTickets: Repository<Tickets>,
     ){}
 
-    async getAllCalls(): Promise<Calls[]> {
+    async getAllCalls(): Promise<CreateCallDto[]> {
         return await this.repoCalls.find();
     }
 
-    async getCallById(id: number): Promise<Calls | undefined> {
+    async getCallById(id: number): Promise<CreateCallDto | undefined> {
         return await this.repoCalls.findOne({where:{callId:+id}});
     }
 
-    createCall(call: Calls): Calls {
+    createCall(call: CreateCallDto): CreateCallDto {
         return this.repoCalls.create(call);
     }
 
-    async updateCall(id: number, newData: Partial<Calls>): Promise<Calls | undefined> {
+    async updateCall(id: number, newData: Partial<UpdateCallDto>): Promise<UpdateCallDto | undefined> {
         const data = await this.repoCalls.findOne({where:{callId:id}})
 
         Object.keys(newData).forEach((key) => {

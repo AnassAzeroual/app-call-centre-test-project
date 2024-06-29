@@ -1,1 +1,8 @@
+<div class="notification-zone" #notification>
+    <ng-template let-fruit="data">
+        It's a
+        <nz-tag [nzColor]="fruit.color">{{ fruit.name }}</nz-tag>
+        <button nz-button nzSize="small">Cut It!</button>
+      </ng-template>
+</div>
 <router-outlet></router-outlet>
