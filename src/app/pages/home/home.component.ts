@@ -1,8 +1,7 @@
 import { DatePipe, NgFor, NgIf } from "@angular/common";
 import { Component, OnInit } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
-import { CallService } from "../../shared/services/call.service";
-import { Call } from "../../shared/models/call.model";
+import { Calls } from "../../shared/models/calls.model";
 
 @Component({
   selector: 'app-home',
@@ -22,25 +21,25 @@ export class HomeComponent implements OnInit {
     {
       text: 'Select Odd Row',
       onSelect: () => {
-        this.listOfCurrentPageData.forEach((data, index) => this.updateCheckedSet(Number(data.id), index % 2 !== 0));
+        this.listOfCurrentPageData.forEach((data, index) => this.updateCheckedSet(Number(data.callId), index % 2 !== 0));
         this.refreshCheckedStatus();
       }
     },
     {
       text: 'Select Even Row',
       onSelect: () => {
-        this.listOfCurrentPageData.forEach((data, index) => this.updateCheckedSet(Number(data.id), index % 2 === 0));
+        this.listOfCurrentPageData.forEach((data, index) => this.updateCheckedSet(Number(data.callId), index % 2 === 0));
         this.refreshCheckedStatus();
       }
     }
   ];
   checked = false;
   indeterminate = false;
-  listOfCurrentPageData: readonly Call[] = [];
-  listOfData: readonly Call[] = [];
+  listOfCurrentPageData: readonly Calls[] = [];
+  listOfData: readonly Calls[] = [];
   setOfCheckedId = new Set<number>();
 
-  constructor(private srv:CallService){}
+  constructor(){}
 
   updateCheckedSet(id: number, checked: boolean): void {
     if (checked) {
@@ -56,23 +55,23 @@ export class HomeComponent implements OnInit {
   }
 
   onAllChecked(value: boolean): void {
-    this.listOfCurrentPageData.forEach(item => this.updateCheckedSet(Number(item.id), value));
+    this.listOfCurrentPageData.forEach(item => this.updateCheckedSet(Number(item.callId), value));
     this.refreshCheckedStatus();
   }
 
-  onCurrentPageDataChange($event: readonly Call[]): void {
+  onCurrentPageDataChange($event: readonly Calls[]): void {
     this.listOfCurrentPageData = $event;
     this.refreshCheckedStatus();
   }
 
   refreshCheckedStatus(): void {
-    this.checked = this.listOfCurrentPageData.every(item => this.setOfCheckedId.has(Number(item.id)));
-    this.indeterminate = this.listOfCurrentPageData.some(item => this.setOfCheckedId.has(Number(item.id))) && !this.checked;
+    this.checked = this.listOfCurrentPageData.every(item => this.setOfCheckedId.has(Number(item.callId)));
+    this.indeterminate = this.listOfCurrentPageData.some(item => this.setOfCheckedId.has(Number(item.callId))) && !this.checked;
   }
 
   ngOnInit(): void {
-    this.srv.getAllCalls().subscribe((res:any) => {
-      this.listOfData = res;
-    })
+    // this.srv.getAllCalls().subscribe((res:any) => {
+    //   this.listOfData = res;
+    // })
   }
 }

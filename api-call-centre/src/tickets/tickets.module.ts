@@ -4,11 +4,12 @@ import { TicketsService } from './tickets.service';
 import { Tickets } from 'entities/Tickets';
 import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Calls } from 'entities/Calls';
 
 @Module({
   imports:[
     PassportModule.register({ defaultStrategy: 'jwt' }),
-    TypeOrmModule.forFeature([Tickets])
+    TypeOrmModule.forFeature([Tickets,Calls])
   ],
   controllers: [TicketsController],
   providers: [TicketsService]

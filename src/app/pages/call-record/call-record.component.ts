@@ -3,8 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { differenceInMilliseconds, differenceInMinutes, format } from 'date-fns';
 import { SharedModule } from '../../shared/shared.module';
-import { CallService } from '../../shared/services/call.service';
-import { Call, Ticket } from '../../shared/models/call.model';
 
 @Component({
   selector: 'app-call-record',
@@ -18,7 +16,7 @@ export class CallRecordComponent implements OnInit {
   callStarted: boolean = false;
   startTime!: Date;
   isSubmit: boolean = false;
-  constructor(private location: Location, private srv: CallService) {
+  constructor(private location: Location) {
     this.callForm = new FormGroup({
       ticket: new FormControl('-'),
       type: new FormControl(''),
@@ -56,25 +54,24 @@ export class CallRecordComponent implements OnInit {
   onSubmit() {
     this.isSubmit = true;
     if (this.callForm.valid) {
-      const newCallData = new Call(
-        this.callForm.value.numero,
-        this.callForm.value.date,
-        this.callForm.value.duree,
-        this.callForm.value.heure,
-        this.callForm.value.ticket,
-        '',
-        this.callForm.value.type,
-        this.callForm.value.sujet,
-        this.callForm.value.notes,
-        new Ticket(',','','','','',''),
-        0,
-      );
-      console.log(newCallData);
-      this.srv.createCall(newCallData)
-        .subscribe(response => {
-          console.log('Appel enregistré avec succès!');
-          // You might want to redirect the user or display a confirmation message
-        });
+      // const newCallData = new Call(
+      //   this.callForm.value.numero,
+      //   this.callForm.value.date,
+      //   this.callForm.value.duree,
+      //   this.callForm.value.heure,
+      //   this.callForm.value.ticket,
+      //   '',
+      //   this.callForm.value.type,
+      //   this.callForm.value.sujet,
+      //   this.callForm.value.notes,
+      //   new Ticket(',','','','','',''),
+      //   0,
+      // );
+      // this.srv.createCall(newCallData)
+      //   .subscribe(() => {
+      //     console.log('Appel enregistré avec succès!');
+      //     // You might want to redirect the user or display a confirmation message
+      //   });
     }
 
   }

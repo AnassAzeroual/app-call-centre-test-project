@@ -20,12 +20,12 @@ export class LoginComponent {
   loginForm!: FormGroup;
   isSubmit = false;
 
-  constructor(private srvLogin: LoginService,private router:Router) { }
+  constructor(private srvLogin: LoginService, private router: Router) { }
 
   ngOnInit() {
     this.loginForm = new FormGroup({
-      'email': new FormControl(null, [Validators.required, Validators.email]),
-      'password': new FormControl(null, Validators.required)
+      'email': new FormControl('j.doe@example.com', [Validators.required, Validators.email]),
+      'password': new FormControl('password123', Validators.required)
     });
   }
 
@@ -36,8 +36,8 @@ export class LoginComponent {
   onSubmit() {
     this.isSubmit = true;
     if (this.loginForm.valid) {
-      this.srvLogin.loginMethod(this.loginForm.value).subscribe((res: Object) => {
-        console.log(res)
+      this.srvLogin.loginMethod(this.loginForm.value).subscribe((res: { accessToken: string }) => {
+        sessionStorage.setItem('token',res.accessToken)
         this.router.navigate(['./'])
       })
     }

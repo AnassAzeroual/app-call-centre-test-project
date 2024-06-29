@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Tickets } from 'entities/Tickets';
+import { CreateTicketDto } from 'src/DTOs/tickets.dto';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -32,7 +33,7 @@ export class TicketsService {
     }
 
 
-    async createTicket(ticket: Tickets): Promise<Tickets> {
+    async createTicket(ticket: CreateTicketDto): Promise<CreateTicketDto> {
         return await this.repoTicket.save(ticket);
     }
 
