@@ -1,10 +1,8 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
-import { TicketsService } from './tickets.service';
-import { Tickets } from 'entities/Tickets';
-import { Users } from 'entities/Users';
-import { GetUser } from 'src/get-user.decorator';
 import { AuthGuard } from '@nestjs/passport';
+import { Tickets } from 'entities/Tickets';
 import { CreateTicketDto } from 'src/DTOs/tickets.dto';
+import { TicketsService } from './tickets.service';
 
 @Controller('tickets')
 @UseGuards(AuthGuard())
@@ -31,7 +29,7 @@ export class TicketsController {
     @Post()
     createTicket(@Body() ticket: CreateTicketDto): Promise<CreateTicketDto> {
         console.log(ticket);
-        
+
         return this.ticketService.createTicket(ticket);
     }
 

@@ -1,1 +1,73 @@
-<p>tickets works!</p>
+<div class="container">
+    <div class="breadcrumb">
+        <nz-breadcrumb>
+            <nz-breadcrumb-item routerLink="/home"><a>Home</a></nz-breadcrumb-item>
+            <nz-breadcrumb-item><a>liste Tickets</a></nz-breadcrumb-item>
+        </nz-breadcrumb>
+    </div>
+
+    <div class="table-container">
+        <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="listOfData"
+            (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
+            <thead>
+                <tr>
+                    <th [nzSelections]="listOfSelection" [(nzChecked)]="checked" [nzIndeterminate]="indeterminate"
+                        (nzCheckedChange)="onAllChecked($event)"></th>
+                    <th>ID Ticket</th>
+                    <th>Créateur de ticket</th>
+                    <th>Attribué à</th>
+                    <th>Date de création</th>
+                    <th>Heure Création</th>
+                    <th>Description</th>
+                    <th>État</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (data of rowSelectionTable.data;track data.callId) {
+                <tr>
+                    <td [nzChecked]="setOfCheckedId.has(data.callId)"
+                        (nzCheckedChange)="onItemChecked(data.callId, $event)"></td>
+                    <td>{{data.ticketId}}</td>
+                    <td>
+                        @if (data.createdByUser) {
+                            @if(data.createdByUser?.role == 2){
+                            <span nz-icon nzType="setting" nzTheme="outline" class="supervisor"></span>
+                            }@else {
+                            <span nz-icon nzType="tag" nzTheme="outline" class="agent"></span>
+                            }
+                            <span [nzTooltipTitle]="data.createdByUser?.role == 2 ? 'supervisor':'agent'" nz-tooltip nzTooltipPlacement="right">
+                                {{ data.createdByUser?.email }}
+                            </span>
+                        }
+                    </td>
+                    <td>
+                        @if (data.assignedToUser) {
+
+                            @if(data.assignedToUser?.role == 2){
+                            <span nz-icon nzType="setting" nzTheme="outline" class="supervisor"></span>
+                            }@else {
+                            <span nz-icon nzType="tag" nzTheme="outline" class="agent"></span>
+                            }
+                            <span [nzTooltipTitle]="data.assignedToUser?.role == 2 ? 'supervisor':'agent'" nz-tooltip nzTooltipPlacement="right">
+                                {{ data.assignedToUser?.email }}
+                            </span>
+                        }
+                    </td>
+                    <td>{{ data.creationDate | date:'dd-MM-yyyy' }}</td>
+                    <td>{{ data.creationDate | date:'HH:mm:ss'}}</td>
+                    <td>{{ data.issueDescription }}</td>
+                    <td>{{ data.ticketStatus }}</td>
+                    <td>
+                        <!-- <button nz-button nzType="primary" [routerLink]="[ '/tickets/add', data.callId]" [queryParams]="{ type: 'add' }"
+                [nzTooltipTitle]="'Ajouter le ticket : ' + data.phoneNumber" nz-tooltip>
+                <span nz-icon nzType="plus" nzTheme="outline"></span>
+              </button> -->
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </nz-table>
+
+    </div>
+</div>

@@ -18,6 +18,7 @@ export class CreateTicketDto {
 
   @IsNumber()
   @IsOptional()
+  @Transform(({ value }) => value == null ? null : Number(value))
   assignedToUserId?: number | null;
 
   @IsDate()

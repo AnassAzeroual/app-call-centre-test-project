@@ -25,13 +25,14 @@
       <tbody>
         @for (data of rowSelectionTable.data;track data.callId) {
         <tr>
-          <td [nzChecked]="setOfCheckedId.has(data.callId)" (nzCheckedChange)="onItemChecked(data.callId, $event)"></td>
+          <td [nzChecked]="setOfCheckedId.has(data.callId!)" (nzCheckedChange)="onItemChecked(data.callId!, $event)"></td>
           <td>{{ data.phoneNumber }}</td>
           <td>{{ data.callDate | date:'dd-MM-yyyy' }}</td>
           <td>{{ data.callDate | date:'HH:mm:ss'}}</td>
           <td>{{ data.callDuration }}</td>
           <td>{{ data.callType }}</td>
           <td>
+            {{data.callTickets}}
             <!-- @if (data.status !== '-') {
             <button nz-button [routerLink]="[ '/tickets/add', data.callId]" [queryParams]="{ type: 'update' }"
               [nzTooltipTitle]="'Modifier le ticket : ' + data.number" nz-tooltip>

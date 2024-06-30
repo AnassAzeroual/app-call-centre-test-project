@@ -1,15 +1,33 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Tickets } from 'entities/Tickets';
+import { Users } from 'entities/Users';
 import { CreateTicketDto } from 'src/DTOs/tickets.dto';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class TicketsService {
-    constructor(@InjectRepository(Tickets) private repoTicket: Repository<Tickets>) { }
+    constructor(
+        @InjectRepository(Tickets) private repoTicket: Repository<Tickets>,
+        @InjectRepository(Users) private repoUsers: Repository<Users>
+) { }
 
     async getTickets(): Promise<Tickets[]> {
-        return await this.repoTicket.find();
+        const tickets = await this.repoTicket.find();
+        let respons = [];
+        if (tickets) {
+            for (const ticket of tickets) {
+                console.log(ticket.assignedToUserId);
+                
+                respons.push({
+                    ...ticket,
+                    createdByUser: (await this.repoUsers.findOne({where:{userId:Number(ticket.createdByUserId)},select:['email','role']})),
+                    assignedToUser: (await this.repoUsers.findOne({where:{userId:Number(ticket.assignedToUserId)},select:['email','role']})),
+                })
+            }
+        }
+
+        return respons
     }
 
     async getTicketsByUserId(userId: number): Promise<Tickets[]> {

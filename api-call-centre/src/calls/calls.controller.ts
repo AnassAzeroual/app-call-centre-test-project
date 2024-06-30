@@ -21,7 +21,7 @@ export class CallsController {
     }
 
     @Post()
-    createCall(@Body() call: CreateCallDto): CreateCallDto {
+    createCall(@Body() call: CreateCallDto): Promise<CreateCallDto> {
         return this.callsService.createCall(call);
     }
 

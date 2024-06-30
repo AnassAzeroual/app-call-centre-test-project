@@ -7,6 +7,7 @@ import { HttpExceptionFilter } from './http-exception.filter';
 import { AuthModule } from './auth/auth.module';
 import { CallsModule } from './calls/calls.module';
 import { TicketsModule } from './tickets/tickets.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -24,7 +25,8 @@ import { TicketsModule } from './tickets/tickets.module';
     }),
     AuthModule,
     CallsModule,
-    TicketsModule
+    TicketsModule,
+    AdminModule
   ],
   controllers: [AppController],
   providers: [AppService,{

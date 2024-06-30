@@ -1,30 +1,39 @@
-import { isPlatformBrowser } from '@angular/common';
-import { Injectable, PLATFORM_ID, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { jwtDecode } from "jwt-decode";
+
+export const baseUrl = 'http://localhost:3000';
 @Injectable({
   providedIn: 'root'
 })
 export class SharedService {
-  constructor(private router: Router) {
-
-
+  public userInfo: any;
+  constructor(private router: Router, private http: HttpClient) {
+    if (sessionStorage.getItem('token')) {
+      this.userInfo = jwtDecode(sessionStorage.getItem('token')!)
+    }
   }
 
 
   isTokenExp() {
-    let authToken = '';
-    const platformId = inject(PLATFORM_ID);
-    const router: Router = inject(Router);
-    if (isPlatformBrowser(platformId)) {
-      authToken = sessionStorage?.getItem('token') ?? '';
-    }
-    if (!!!authToken) return router.navigate(['/login'])
+    let authToken = sessionStorage.getItem('token');
+
+    if (!authToken) return this.router.navigate(['/login'])
     let decoded = jwtDecode(authToken);
+    this.userInfo = decoded;
     let tokenExp = new Date(0).setUTCSeconds(Number(decoded.exp))
     let session = tokenExp.valueOf() > new Date().valueOf()
-    if (session === false) router.navigate(['/login']) // if token exp navigate 
+    if (session === false) this.router.navigate(['/login']) // if token exp navigate 
     return session
+  }
+
+  getUser() {
+    return this.userInfo;
+  }
+
+  getAgents(){
+    return this.http.get(`${baseUrl}/admin/agents`);
   }
 
 }
