@@ -5,9 +5,11 @@ import { ListNgZorroAntdModule } from './list-ng-zorro-antd.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TicketsFormComponent } from './components/tickets-form/tickets-form.component';
 import { RouterLink } from '@angular/router';
+import { CreateTicketComponent } from './components/create-ticket/create-ticket.component';
 
 const components = [
-  TicketsFormComponent
+  TicketsFormComponent,
+  CreateTicketComponent
 ]
 @NgModule({
   imports: [

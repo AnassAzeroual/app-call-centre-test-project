@@ -19,14 +19,12 @@ import { Users } from '../../shared/models/users.model';
 })
 export class CallRecordComponent implements OnInit {
   callForm!: FormGroup;
-  ticketForm!: FormGroup;
   callStarted: boolean = false;
   startTime!: Date;
   isSubmitCallForm: boolean = false;
-  isSubmitTicketForm: boolean = false;
   isTicketZone = false;
-  listAgents: Users[] = [];
-  constructor(private location: Location, private srvTicket: TicketsService, private srvCalls: CallsService, private srvShared: SharedService) {
+  callId!:number;
+  constructor(private location: Location, private srvCalls: CallsService, private srvShared: SharedService) {
     this.callForm = new FormGroup({
       type: new FormControl('',[Validators.required]),
       numero: new FormControl('', [Validators.required]),
@@ -34,30 +32,17 @@ export class CallRecordComponent implements OnInit {
       heure: new FormControl('', [Validators.required]),
       duree: new FormControl('', [Validators.required]),
     });
-
-    this.ticketForm = new FormGroup({
-      callId: new FormControl('', [Validators.required]),
-      ticketStatus: new FormControl('', [Validators.required]),
-      sujet: new FormControl('', [Validators.required]),
-      associateTo : new FormControl(null),
-    });
-
   }
 
   ngOnInit(): void { }
 
   showTicketZone() {
     this.isTicketZone = true;
-    this.srvShared.getAgents().subscribe((res:any) => {
-      this.listAgents = res;
-    })
   }
   get form() {
     return this.callForm.controls;
   }
-  get formTicket() {
-    return this.ticketForm.controls;
-  }
+  
 
   onStartCall() {
     this.startTime = new Date();
@@ -86,29 +71,13 @@ export class CallRecordComponent implements OnInit {
       this.srvCalls.createCall(data).subscribe(res => {
         this.callForm.reset();
         this.isSubmitCallForm = false;
-        this.ticketForm.get('callId')?.setValue(res.callId);
-        this.ticketForm.get('ticketStatus')?.setValue('En cours');
+        if (res.callId) {
+          this.callId = Number(res.callId);
+        }
       })
     }
   }
-  onSubmitTicket() {
-    this.isSubmitTicketForm = true;
-    console.log(this.ticketForm);
-    if (this.ticketForm.valid) {
-      let data: Tickets = {
-        callId: this.ticketForm.get('callId')?.value,
-        issueDescription: this.ticketForm.get('sujet')?.value,
-        ticketStatus: this.ticketForm.get('ticketStatus')?.value,
-        createdByUserId: this.srvShared.getUser()?.id,
-        assignedToUserId: this.ticketForm.get('associateTo')?.value,
-      }
-      this.srvTicket.createTicket(data).subscribe(res => {
-        console.log(res)
-        this.ticketForm.reset();
-        this.isSubmitTicketForm = false;
-      })
-    }
-  }
+  
 
   goBack() {
     this.location.back();
