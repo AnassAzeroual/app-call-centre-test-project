@@ -50,7 +50,6 @@ export class CallRecordComponent implements OnInit {
     this.isTicketZone = true;
     this.srvShared.getAgents().subscribe((res:any) => {
       this.listAgents = res;
-      // this.ticketForm.get('associateTo')?.setValue(res);
     })
   }
   get form() {
