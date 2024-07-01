@@ -9,6 +9,8 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
+
 const listAnt = [
   NzBreadCrumbModule,
   NzTableComponent,
@@ -21,7 +23,8 @@ const listAnt = [
   NzModalModule,
   NzSelectModule,
   NzNotificationModule,
-  NzTagModule
+  NzTagModule,
+  NzEmptyModule
 ];
 
 @NgModule({

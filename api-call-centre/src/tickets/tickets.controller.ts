@@ -22,6 +22,11 @@ export class TicketsController {
         return this.ticketService.getTicketsByPhone(phoneNumber);
     }
 
+    @Get('ticketById/:id')
+    getTicketByID(@Param('id') ticketId: number): Promise<Tickets> {
+        return this.ticketService.getTicketById(ticketId);
+    }
+
     @Get('/ticketByUserId/:id')
     getTicketByUserConnected(@Param('id') userId: number): Promise<Tickets[]> {
         return this.ticketService.getTicketsByUserId(userId);

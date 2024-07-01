@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Tickets } from '../../shared/models/tickets.model';
 import { Observable } from 'rxjs';
 import { baseUrl } from '../../shared/services/shared.service';
+import { TicketComments } from '../../shared/models/ticketComments.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,20 @@ export class TicketsService {
 
   editTicket(ticket: Tickets): Observable<Tickets> {
     return this.http.put<Tickets>(`${baseUrl}/tickets/${ticket.ticketId}`, ticket);
+  }
+
+  getTicketComments(ticketId: number): Observable<TicketComments[]> {
+    return this.http.get<TicketComments[]>(`${baseUrl}/ticket-comments/${ticketId}`);
+  }
+
+  getTicketById(ticketId: number): Observable<Tickets> {
+    console.log('service');
+    
+    return this.http.get<Tickets>(`${baseUrl}/tickets/ticketById/${ticketId}`);
+  }
+
+  addTicketComment(ticketComment: TicketComments): Observable<any> {
+    return this.http.post(`${baseUrl}/ticket-comments`,ticketComment);
   }
 
 }

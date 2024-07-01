@@ -68,6 +68,11 @@ export class CreateTicketComponent implements OnInit {
     });
   }
 
+  goBack()
+  {
+    this.location.back();
+  }
+
   onSubmitTicket() {
     this.isSubmitTicketForm = true;
     if (this.ticketForm.valid) {

@@ -3,11 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
 import { Calls } from "../../shared/models/calls.model";
 import { CallsService } from "./calls.service";
+import { FormFilterComponent } from "../../shared/components/form-filter/form-filter.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgIf, NgFor, SharedModule, DatePipe],
+  imports: [NgIf, NgFor, SharedModule, DatePipe,FormFilterComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

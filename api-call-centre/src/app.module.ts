@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { CallsModule } from './calls/calls.module';
 import { TicketsModule } from './tickets/tickets.module';
 import { AdminModule } from './admin/admin.module';
+import { TicketCommentsModule } from './ticket-comments/ticket-comments.module';
 
 @Module({
   imports: [
@@ -26,7 +27,8 @@ import { AdminModule } from './admin/admin.module';
     AuthModule,
     CallsModule,
     TicketsModule,
-    AdminModule
+    AdminModule,
+    TicketCommentsModule
   ],
   controllers: [AppController],
   providers: [AppService,{

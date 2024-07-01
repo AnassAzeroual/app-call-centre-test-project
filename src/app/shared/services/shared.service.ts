@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { jwtDecode } from "jwt-decode";
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { DecodedSession } from '../models/decodedSession.model';
 
 export const baseUrl = 'http://localhost:3000';
 @Injectable({
@@ -10,7 +11,7 @@ export const baseUrl = 'http://localhost:3000';
 })
 export class SharedService {
   
-  public userInfo: any;
+  public userInfo: DecodedSession = new DecodedSession();
   constructor(private router: Router, private http: HttpClient, private srvNotification: NzNotificationService) {
     if (sessionStorage.getItem('token')) {
       this.userInfo = jwtDecode(sessionStorage.getItem('token')!)
@@ -18,17 +19,19 @@ export class SharedService {
   }
 
 
-  isTokenExp() {
-    let authToken = sessionStorage.getItem('token');
+  // isTokenExp() {
+  //   let authToken = sessionStorage.getItem('token');
 
-    if (!authToken) return this.router.navigate(['/login'])
-    let decoded = jwtDecode(authToken);
-    this.userInfo = decoded;
-    let tokenExp = new Date(0).setUTCSeconds(Number(decoded.exp))
-    let session = tokenExp.valueOf() > new Date().valueOf()
-    if (session === false) this.router.navigate(['/login']) // if token exp navigate 
-    return session
-  }
+  //   if (!authToken) return this.router.navigate(['/login'])
+  //   let decoded = jwtDecode(authToken);
+  //   this.userInfo = decoded;
+  //   console.log(decoded);
+    
+  //   let tokenExp = new Date(0).setUTCSeconds(Number(decoded.exp))
+  //   let session = tokenExp.valueOf() > new Date().valueOf()
+  //   if (session === false) this.router.navigate(['/login']) // if token exp navigate 
+  //   return session
+  // }
 
   initUserData(token:string){
     this.userInfo = jwtDecode(token);

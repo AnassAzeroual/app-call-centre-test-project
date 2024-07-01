@@ -1,0 +1,59 @@
+<div class="back">
+  <button nz-button nzType="primary" [nzSize]="'large'" nzShape="circle" (click)="goBack()">
+    <span nz-icon nzType="arrow-left" nzTheme="outline"></span>
+  </button>
+</div>
+<div class="ticket-comments-list">
+  <div class="ticket-wrapper">
+    <h2>Ticket de service client</h2>
+
+    <div class="ticket-details">
+      <div><span class="label">ID du Ticket:</span> {{ticket?.ticketId}} </div>
+      <div><span class="label">Demande:</span> <div>{{ticket?.issueDescription}}</div></div>
+      <div><span class="label">Statut:</span> <span class="status" 
+        [ngClass]="{
+          'resolved': ticket?.ticketStatus == 'Résolu',
+          'waiting': ticket?.ticketStatus == 'En cours',
+          'canaled': ticket?.ticketStatus == 'Annulé'
+          }">{{ticket?.ticketStatus}}</span></div>
+      <div><span class="label">Agent:</span> Attribué à l'ID utilisateur {{ticket?.assignedToUser?.email}}</div>
+      <div><span class="label">Créé par:</span> ID utilisateur {{ticket?.createdByUser?.email}}</div>
+      <div><span class="label">Ouvert le:</span> {{ticket?.creationDate | date}}</div>
+      <div><span class="label">Dernière mise à jour:</span> {{ticket?.lastUpdateDate | date}}</div>
+    </div>
+  </div>
+
+  <div class="comments">
+
+    <h2>Commentaires sur les Tickets</h2>
+@if (comments.length) {
+
+  <ul>
+    <li *ngFor="let comment of comments">
+      <div class="ticket-comment">
+        <p>{{ comment.commentText }}</p>
+        <footer>
+          <span>Par {{ comment.author?.firstName }} {{ comment.author?.lastName }} on {{ comment.commentDate | date
+              }}</span>
+            <!-- <button *ngIf="canDeleteComment" (click)="deleteComment()">Delete</button> -->
+          </footer>
+        </div>
+      </li>
+    </ul>
+  }@else {
+    <nz-empty></nz-empty>
+  }
+
+    <div class="add-ticket-comment">
+      <h2>Ajouter un commentaire</h2>
+
+      <form (ngSubmit)="onSubmit()" [formGroup]="formTicketComments">
+        <textarea formControlName="commentText" placeholder="Enter your comment..."></textarea>
+        <div *ngIf="form['commentText']?.invalid && isSubmitted" class="error">
+          <small *ngIf="form['commentText']?.errors">Ticket is required.</small>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -37,7 +37,7 @@
               ></span>
           </span>
           <div (click)="logout()" nzTooltipTitle="Se déconnecter" nz-tooltip class="logout">
-            <span nz-icon nzType="logout" nzTheme="outline" ></span> {{userConnected.name}}
+            <span nz-icon nzType="logout" nzTheme="outline" ></span> {{userConnected.name}} ( <span [ngStyle]="{'color':userConnected.role === '1' ? 'green' : 'red' }">{{userConnected.role == 1 ? 'Agent':'Supervisor'}}</span> )
           </div>
         </div>
       </nz-header>

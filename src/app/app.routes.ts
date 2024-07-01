@@ -3,12 +3,12 @@ import { DashboardLayoutComponent } from './layout/dashboard-layout/dashboard-la
 import { LoginLayoutComponent } from "./layout/login-layout/login-layout.component";
 import { LoginComponent } from "./login/login.component";
 import { CallRecordComponent } from './pages/call-record/call-record.component';
+import { CommentsComponent } from './pages/comments/comments.component';
 import { HomeComponent } from './pages/home/home.component';
 import { TicketsComponent } from './pages/tickets/tickets.component';
-import { TicketsFormComponent } from './shared/components/tickets-form/tickets-form.component';
+import { CreateTicketComponent } from './shared/components/create-ticket/create-ticket.component';
 import { authGuard } from './shared/services/auth.guard';
 import { supervisorGuard } from './shared/services/supervisor-role.guard';
-import { CreateTicketComponent } from './shared/components/create-ticket/create-ticket.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/home' },
@@ -27,6 +27,14 @@ export const routes: Routes = [
     children: [
       { path: '', component: TicketsComponent },
       { path: 'add/:id', component: CreateTicketComponent },
+    ]
+  },
+  {
+    path: 'comments',
+    component: DashboardLayoutComponent,
+    canActivate: [authGuard],
+    children: [
+      { path: ':id', component: CommentsComponent },
     ]
   },
   {

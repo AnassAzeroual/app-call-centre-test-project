@@ -1,10 +1,12 @@
-
+import { Users } from './users.model';
+type OptionalUsers = Partial<Users>;
 export class TicketComments {
+  public author?: OptionalUsers
   constructor(
-    public commentId: number,
-    public ticketId: number,
     public commentText: string,
-    public commentDate: Date,
     public commentedByUserId: number,
+    public commentDate: Date = new Date(),
+    public ticketId?: number,
+    public commentId?: number
   ) { }
 }

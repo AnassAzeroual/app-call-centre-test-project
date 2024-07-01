@@ -6,10 +6,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TicketsFormComponent } from './components/tickets-form/tickets-form.component';
 import { RouterLink } from '@angular/router';
 import { CreateTicketComponent } from './components/create-ticket/create-ticket.component';
+import { FormFilterComponent } from './components/form-filter/form-filter.component';
 
 const components = [
   TicketsFormComponent,
-  CreateTicketComponent
+  CreateTicketComponent,
+  FormFilterComponent
 ]
 @NgModule({
   imports: [

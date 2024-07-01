@@ -7,6 +7,8 @@
     </div>
 
     <div class="table-container">
+        <shared-form-filter></shared-form-filter>
+
         <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="listOfData"
             (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
             <thead>
@@ -20,6 +22,7 @@
                     <th>Heure Création</th>
                     <th>Description</th>
                     <th>État</th>
+                    <th>Commentaires</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,27 +33,29 @@
                     <td>{{data.ticketId}}</td>
                     <td>
                         @if (data.createdByUser) {
-                            @if(data.createdByUser?.role == 2){
-                            <span nz-icon nzType="setting" nzTheme="outline" class="supervisor"></span>
-                            }@else {
-                            <span nz-icon nzType="tag" nzTheme="outline" class="agent"></span>
-                            }
-                            <span [nzTooltipTitle]="data.createdByUser?.role == 2 ? 'supervisor':'agent'" nz-tooltip nzTooltipPlacement="right">
-                                {{ data.createdByUser?.email }}
-                            </span>
+                        @if(data.createdByUser?.role == 2){
+                        <span nz-icon nzType="setting" nzTheme="outline" class="supervisor"></span>
+                        }@else {
+                        <span nz-icon nzType="tag" nzTheme="outline" class="agent"></span>
+                        }
+                        <span [nzTooltipTitle]="data.createdByUser?.role == 2 ? 'supervisor':'agent'" nz-tooltip
+                            nzTooltipPlacement="right">
+                            {{ data.createdByUser?.email }}
+                        </span>
                         }
                     </td>
                     <td>
                         @if (data.assignedToUser) {
 
-                            @if(data.assignedToUser?.role == 2){
-                            <span nz-icon nzType="setting" nzTheme="outline" class="supervisor"></span>
-                            }@else {
-                            <span nz-icon nzType="tag" nzTheme="outline" class="agent"></span>
-                            }
-                            <span [nzTooltipTitle]="data.assignedToUser?.role == 2 ? 'supervisor':'agent'" nz-tooltip nzTooltipPlacement="right">
-                                {{ data.assignedToUser?.email }}
-                            </span>
+                        @if(data.assignedToUser?.role == 2){
+                        <span nz-icon nzType="setting" nzTheme="outline" class="supervisor"></span>
+                        }@else {
+                        <span nz-icon nzType="tag" nzTheme="outline" class="agent"></span>
+                        }
+                        <span [nzTooltipTitle]="data.assignedToUser?.role == 2 ? 'supervisor':'agent'" nz-tooltip
+                            nzTooltipPlacement="right">
+                            {{ data.assignedToUser?.email }}
+                        </span>
                         }
                     </td>
                     <td>{{ data.creationDate | date:'dd-MM-yyyy' }}</td>
@@ -58,13 +63,21 @@
                     <td>{{ data.issueDescription }}</td>
                     <td>
                         <!-- {{ data.ticketStatus }} -->
-                        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Sélectionnez un ticket" [(ngModel)]="data.ticketStatus" (ngModelChange)="ticketChanged($event,data)">
+                        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Sélectionnez un ticket"
+                            [(ngModel)]="data.ticketStatus" (ngModelChange)="ticketChanged($event,data)">
                             <nz-option nzLabel="En cours" nzValue="En cours"></nz-option>
                             <nz-option nzLabel="Résolu" nzValue="Résolu"></nz-option>
                             <nz-option nzLabel="Annulé" nzValue="Annulé"></nz-option>
-                          </nz-select>
+                        </nz-select>
                     </td>
-                    
+                    <td>
+                        <!-- ng-zorro button for redirect to page comment with icon -->
+                        <button nz-button nzType="primary" nzIcon="message" (click)="redirectComment(data.ticketId)"
+                            nzTooltipTitle="Ajouter un Commentaire : {{data.ticketId}} " nz-tooltip>
+                            <span nz-icon nzType="message" nzTheme="outline" class="edit"></span>
+                        </button>
+                    </td>
+
                 </tr>
                 }
             </tbody>

@@ -4,6 +4,7 @@ import { Transform } from 'class-transformer';
 export class CreateCallDto {
   @Transform(({ value }) => new Date(value))
   @IsDate()
+  @Transform(({ value }) => new Date(value))
   callDate: Date;
 
   @IsNumber()
