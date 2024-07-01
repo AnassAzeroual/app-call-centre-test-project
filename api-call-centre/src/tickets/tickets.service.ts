@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Tickets } from 'entities/Tickets';
 import { Users } from 'entities/Users';
 import { CreateTicketDto } from 'src/DTOs/tickets.dto';
+import { UpdateTicketDto } from 'src/DTOs/update.dto';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -53,6 +54,17 @@ export class TicketsService {
 
     async createTicket(ticket: CreateTicketDto): Promise<CreateTicketDto> {
         return await this.repoTicket.save(ticket);
+    }
+
+    async updateTicket(id: number, newData: Partial<UpdateTicketDto>): Promise<UpdateTicketDto | undefined> {
+        const data = await this.repoTicket.findOne({ where: { ticketId: id } })
+
+        Object.keys(newData).forEach((key) => {
+            data[key] = newData[key];
+        });
+
+        const res = await this.repoTicket.save(data)
+        return res
     }
 
 

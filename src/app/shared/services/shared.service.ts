@@ -30,6 +30,10 @@ export class SharedService {
     return session
   }
 
+  initUserData(token:string){
+    this.userInfo = jwtDecode(token);
+  }
+
   getUser() {
     return this.userInfo;
   }

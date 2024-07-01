@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { LoginService } from "./login.service";
 import { Router } from "@angular/router";
+import { SharedService } from "../shared/services/shared.service";
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginComponent {
   loginForm!: FormGroup;
   isSubmit = false;
 
-  constructor(private srvLogin: LoginService, private router: Router) { }
+  constructor(private srvLogin: LoginService, private router: Router,private srvShared: SharedService) { }
 
   ngOnInit() {
     this.loginForm = new FormGroup({
@@ -38,6 +39,7 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.srvLogin.loginMethod(this.loginForm.value).subscribe((res: { accessToken: string }) => {
         sessionStorage.setItem('token',res.accessToken)
+        this.srvShared.initUserData(res?.accessToken)
         this.router.navigate(['./'])
       })
     }

@@ -27,4 +27,8 @@ export class TicketsService {
     return this.http.post<Tickets>(`${baseUrl}/tickets`, ticket);
   }
 
+  editTicket(ticket: Tickets): Observable<Tickets> {
+    return this.http.put<Tickets>(`${baseUrl}/tickets/${ticket.ticketId}`, ticket);
+  }
+
 }

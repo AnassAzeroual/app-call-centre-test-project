@@ -57,7 +57,14 @@
                     <td>{{ data.creationDate | date:'dd-MM-yyyy' }}</td>
                     <td>{{ data.creationDate | date:'HH:mm:ss'}}</td>
                     <td>{{ data.issueDescription }}</td>
-                    <td>{{ data.ticketStatus }}</td>
+                    <td>
+                        <!-- {{ data.ticketStatus }} -->
+                        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Sélectionnez un ticket" [(ngModel)]="data.ticketStatus" (ngModelChange)="ticketChanged($event,data)">
+                            <nz-option nzLabel="En cours" nzValue="En cours"></nz-option>
+                            <nz-option nzLabel="Résolu" nzValue="Résolu"></nz-option>
+                            <nz-option nzLabel="Annulé" nzValue="Annulé"></nz-option>
+                          </nz-select>
+                    </td>
                     <td>
                         <!-- <button nz-button nzType="primary" [routerLink]="[ '/tickets/add', data.callId]" [queryParams]="{ type: 'add' }"
                 [nzTooltipTitle]="'Ajouter le ticket : ' + data.phoneNumber" nz-tooltip>

@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Tickets } from 'entities/Tickets';
 import { CreateTicketDto } from 'src/DTOs/tickets.dto';
 import { TicketsService } from './tickets.service';
+import { UpdateTicketDto } from 'src/DTOs/update.dto';
 
 @Controller('tickets')
 @UseGuards(AuthGuard())
@@ -31,6 +32,11 @@ export class TicketsController {
         console.log(ticket);
 
         return this.ticketService.createTicket(ticket);
+    }
+
+    @Put(':id')
+    updateTicket(@Param('id') id: number, @Body() Ticket: UpdateTicketDto): Promise<UpdateTicketDto> {
+        return this.ticketService.updateTicket(id, Ticket);
     }
 
 }

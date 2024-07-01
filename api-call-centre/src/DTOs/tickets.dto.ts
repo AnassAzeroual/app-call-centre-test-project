@@ -23,11 +23,11 @@ export class CreateTicketDto {
 
   @IsDate()
   @IsOptional()
-  @Transform(({ value }) => value || new Date()) // Optional transformation for creationDate
+  @Transform(({ value }) => new Date(value)) // Optional transformation for creationDate
   creationDate: Date;
 
   @IsDate()
   @IsOptional()
-  @Transform(({ value }) => value || null) // Optional transformation for lastUpdateDate
+  @Transform(({ value }) => value || new Date()) // Optional transformation for lastUpdateDate
   lastUpdateDate?: Date | null;
 }

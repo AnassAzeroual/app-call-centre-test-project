@@ -4,11 +4,12 @@ import { Calls } from '../../shared/models/calls.model';
 import { SharedModule } from '../../shared/shared.module';
 import { TicketsService } from './tickets.service';
 import { Tickets } from '../../shared/models/tickets.model';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-tickets',
   standalone: true,
-  imports: [NgIf, NgFor, SharedModule, DatePipe],
+  imports: [NgIf, NgFor, SharedModule, DatePipe,FormsModule],
   templateUrl: './tickets.component.html',
   styleUrl: './tickets.component.scss'
 })
@@ -75,5 +76,14 @@ export class TicketsComponent {
     this.srv.getAllTickets().subscribe((res: any) => {
       this.listOfData = res;
     })
+  }
+
+  ticketChanged(statusTicket:"En cours" | "Résolu" | "Annulé",data:Tickets){
+    if(!statusTicket) return
+    data.ticketStatus = statusTicket;
+    this.srv.editTicket(data).subscribe(res => {
+      console.log(res);
+    })
+    
   }
 }

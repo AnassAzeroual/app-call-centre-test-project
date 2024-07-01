@@ -9,7 +9,7 @@ export class CreateNotificationDto {
   callType: string;
 
   @IsDate()
-  @Transform(({ value }) => value || new Date())
+  @Transform(({ value }) => new Date(value))
   date: Date;
 
   @IsString()
