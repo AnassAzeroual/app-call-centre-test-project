@@ -2,8 +2,8 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.7.
 
-![Image Description](image1)
-![Image Description](image2)
+![Image Description]([image1](https://raw.githubusercontent.com/AnassAzeroual/app-call-centre-test-project/main/image1.PNG))
+![Image Description]([image2](https://raw.githubusercontent.com/AnassAzeroual/app-call-centre-test-project/main/image2.PNG))
 
 ## Development server
 
