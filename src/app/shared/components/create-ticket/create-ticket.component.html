@@ -22,7 +22,7 @@
       <label for="associer">S'associer à:</label>
       <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Sélectionnez un agent" formControlName="associateTo">
         @for (item of listAgents; track item.userId) {
-          <nz-option nzLabel="{{ item.firstName }} {{ item.lastName }}" nzValue="{{ item.userId }}"></nz-option>
+          <nz-option nzLabel="{{ item.firstName }} {{ item.lastName }} {{ item.role == 1 ? '(Agent)':'(Superviseur)' }}" nzValue="{{ item.userId }}"></nz-option>
         }
       </nz-select>
       <div *ngIf="formTicket['associateTo']?.invalid && isSubmitTicketForm" class="error">
@@ -30,7 +30,7 @@
       </div>
     </div>
     <div class="form-group">
-      <label for="sujet">callId: {{ticketForm.get('callId')?.value}}</label>
+      <label for="sujet">Call Id: {{ticketForm.get('callId')?.value}}</label>
     </div>
     <button type="submit" class="btn btn-primary" [disabled]="!ticketForm.get('callId')?.value">Associer un ticket</button>
   </form>

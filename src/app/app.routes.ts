@@ -7,6 +7,8 @@ import { HomeComponent } from './pages/home/home.component';
 import { TicketsComponent } from './pages/tickets/tickets.component';
 import { TicketsFormComponent } from './shared/components/tickets-form/tickets-form.component';
 import { authGuard } from './shared/services/auth.guard';
+import { supervisorGuard } from './shared/services/supervisor-role.guard';
+import { CreateTicketComponent } from './shared/components/create-ticket/create-ticket.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/home' },
@@ -24,7 +26,7 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       { path: '', component: TicketsComponent },
-      { path: 'add/:id', component: TicketsFormComponent },
+      { path: 'add/:id', component: CreateTicketComponent },
     ]
   },
   {
@@ -32,7 +34,7 @@ export const routes: Routes = [
     component: DashboardLayoutComponent,
     canActivate: [authGuard],
     children: [
-      { path: '', component: CallRecordComponent },
+      { path: '', component: CallRecordComponent, canActivate:[supervisorGuard] },
     ]
   },
   {
@@ -41,6 +43,6 @@ export const routes: Routes = [
     children: [
       { path: '', component: LoginComponent},
     ]
-  }
-
+  },
+  { path: '**', pathMatch: 'full', redirectTo: '/home' }
 ];

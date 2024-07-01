@@ -23,10 +23,10 @@ export class CallRecordComponent implements OnInit {
   startTime!: Date;
   isSubmitCallForm: boolean = false;
   isTicketZone = false;
-  callId!:number;
+  callId!: number;
   constructor(private location: Location, private srvCalls: CallsService, private srvShared: SharedService) {
     this.callForm = new FormGroup({
-      type: new FormControl('',[Validators.required]),
+      type: new FormControl('', [Validators.required]),
       numero: new FormControl('', [Validators.required]),
       date: new FormControl('', [Validators.required]),
       heure: new FormControl('', [Validators.required]),
@@ -42,7 +42,7 @@ export class CallRecordComponent implements OnInit {
   get form() {
     return this.callForm.controls;
   }
-  
+
 
   onStartCall() {
     this.startTime = new Date();
@@ -72,12 +72,13 @@ export class CallRecordComponent implements OnInit {
         this.callForm.reset();
         this.isSubmitCallForm = false;
         if (res.callId) {
+          this.srvShared.notification('success', 'Appel succès', 'La appel créé avec succès.');
           this.callId = Number(res.callId);
         }
       })
     }
   }
-  
+
 
   goBack() {
     this.location.back();
