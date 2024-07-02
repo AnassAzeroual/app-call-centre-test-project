@@ -30,37 +30,9 @@ export class TicketsFormComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    // this.srvCall.getCallById(this.id).subscribe((res: any) => {
-    //   console.log(res);
+  ngOnInit(): void {}
 
-    //   this.ticketForm.patchValue({
-    //     id: this.id,
-    //     nom: '',
-    //     email: '',
-    //     sujet: '',
-    //     ticket: res.status,
-    //     description: '',
-    //   })
-    // })
-
-  }
-
-  onSubmit() {
-    const ticketData = this.ticketForm.value;
-    console.log(ticketData);
-    if (this.formType === 'Création') {
-      // this.srvCall.createCall(ticketData)
-      //   .subscribe((res: any) => {
-      //     console.log(res);
-      //   });
-    } else {
-      // this.srvCall.updateCall(this.id, ticketData)
-      //   .subscribe((res: any) => {
-      //     console.log(res);
-      //   });
-    }
-  }
+  onSubmit() {}
 
   goBack() {
     this.location.back();

@@ -53,7 +53,6 @@ export class CallRecordComponent implements OnInit {
     this.callStarted = false;
     const endTime = new Date();
     const duration = differenceInSeconds(endTime, this.startTime)
-    console.log(duration);
 
     this.callForm.patchValue({ duree: duration, date: format(this.startTime, 'yyyy-MM-dd'), heure: format(this.startTime, 'HH:mm:ss') }); // Update form with calculated duration
   }
@@ -61,7 +60,6 @@ export class CallRecordComponent implements OnInit {
   onSubmitCall() {
     this.isSubmitCallForm = true;
     if (this.callForm.valid) {
-      console.log(this.callForm.value);
       let data: Calls = {
         callType: this.callForm.get('type')?.value,
         phoneNumber: this.callForm.get('numero')?.value,

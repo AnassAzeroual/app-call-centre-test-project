@@ -18,21 +18,6 @@ export class SharedService {
     }
   }
 
-
-  // isTokenExp() {
-  //   let authToken = sessionStorage.getItem('token');
-
-  //   if (!authToken) return this.router.navigate(['/login'])
-  //   let decoded = jwtDecode(authToken);
-  //   this.userInfo = decoded;
-  //   console.log(decoded);
-    
-  //   let tokenExp = new Date(0).setUTCSeconds(Number(decoded.exp))
-  //   let session = tokenExp.valueOf() > new Date().valueOf()
-  //   if (session === false) this.router.navigate(['/login']) // if token exp navigate 
-  //   return session
-  // }
-
   initUserData(token:string){
     this.userInfo = jwtDecode(token);
   }

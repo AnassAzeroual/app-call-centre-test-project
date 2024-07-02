@@ -84,7 +84,6 @@ export class TicketsComponent {
     if (!statusTicket) return
     data.ticketStatus = statusTicket;
     this.srv.editTicket(data).subscribe(res => {
-      console.log(res);
     })
 
   }

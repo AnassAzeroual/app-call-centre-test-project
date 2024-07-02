@@ -4,7 +4,7 @@
   </button>
 </div>
 <div class="ticket-container">
-  <form [formGroup]="ticketForm" (ngSubmit)="onSubmitTicket()">
+  <form [formGroup]="ticketForm">
     <div class="form-group">
       <label for="sujet">Ticket:</label>
       <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Sélectionnez un ticket" formControlName="ticketStatus">
@@ -37,6 +37,6 @@
     <div class="form-group">
       <label for="sujet">Call Id: {{ticketForm.get('callId')?.value}}</label>
     </div>
-    <button type="submit" class="btn btn-primary" [disabled]="!ticketForm.get('callId')?.value">Associer un ticket</button>
+    <button (click)="onSubmitTicket()" class="btn btn-primary" >Associer un ticket</button>
   </form>
 </div>

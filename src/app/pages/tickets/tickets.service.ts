@@ -37,8 +37,6 @@ export class TicketsService {
   }
 
   getTicketById(ticketId: number): Observable<Tickets> {
-    console.log('service');
-    
     return this.http.get<Tickets>(`${baseUrl}/tickets/ticketById/${ticketId}`);
   }
 

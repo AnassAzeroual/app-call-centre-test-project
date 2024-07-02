@@ -37,8 +37,13 @@
               ></span>
           </span>
           <div class="user-zone">
-            <div class="notification" [ngStyle]="{'color': notifications.length ? 'red':'black'}">
-              {{notifications.length}} <span nz-icon nzType="notification" nzTheme="outline" ></span>
+            <div class="notification">
+              <nz-badge [nzCount]="notifications.length" nz-popover
+                        nzPopoverTitle="Title"
+                        [nzPopoverContent]="contentTemplate"
+                        nzPopoverPlacement="rightBottom">
+                <a class="head-example"></a>
+              </nz-badge>
             </div>
             <div (click)="logout()" nzTooltipTitle="Se déconnecter" nz-tooltip class="logout">
               <span nz-icon nzType="logout" nzTheme="outline" ></span> {{userConnected.name}} ( <span [ngStyle]="{'color':userConnected.role === '1' ? 'green' : 'red' }">{{userConnected.role == 1 ? 'Agent':'Supervisor'}}</span> )
@@ -53,3 +58,13 @@
       </nz-content>
     </nz-layout>
   </nz-layout>
+
+<ng-template #contentTemplate>
+  @for (notif of notifications; track notif?.id){
+  <div>
+    {{notif.ticketType}}
+    {{notif.subject}}
+    {{notif.date | date}}
+  </div>
+  }
+</ng-template>

@@ -18,7 +18,6 @@ export class TicketsController {
 
     @Get(':phoneNumber')
     getCallById(@Param('phoneNumber') phoneNumber: string): Promise<any> {
-        console.log(phoneNumber)
         return this.ticketService.getTicketsByPhone(phoneNumber);
     }
 
@@ -34,8 +33,6 @@ export class TicketsController {
 
     @Post()
     createTicket(@Body() ticket: CreateTicketDto): Promise<CreateTicketDto> {
-        console.log(ticket);
-
         return this.ticketService.createTicket(ticket);
     }
 

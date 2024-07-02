@@ -12,8 +12,6 @@ export const supervisorGuard: CanActivateFn = (route, state) => {
     router.navigate(['/login'])
     return false;
   } else {
-    console.log(srvShared.getUser().roles);
-    
     if (srvShared.getUser().roles === 2) {
       return true
     } else {

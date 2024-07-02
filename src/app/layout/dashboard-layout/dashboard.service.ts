@@ -17,9 +17,6 @@ export class DashboardService {
         token: sessionStorage.getItem('token')
       }
     });
-    setTimeout(() => {
-      this.sendMessage('')
-    }, 3000);
   }
 
   sendMessage(data: any) { //TODO create DTO
@@ -39,8 +36,6 @@ export class DashboardService {
   getMessages() {
     const observable = new Observable((observer) => {
       this.socket.on('getEvent', (data: any) => {
-        console.log(data);
-
         observer.next(data);
       });
       return () => {

@@ -7,20 +7,21 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { SharedService } from '../../shared/services/shared.service';
 import { SharedModule } from '../../shared/shared.module';
 import { DashboardService } from './dashboard.service';
+import {NzPopoverDirective} from "ng-zorro-antd/popover";
 
 @Component({
   selector: 'app-dashboard-layout',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink, NzIconModule, NzLayoutModule, NzMenuModule,SharedModule],
-  providers:[],
+  imports: [CommonModule, RouterOutlet, RouterLink, NzIconModule, NzLayoutModule, NzMenuModule, SharedModule, NzPopoverDirective],
+  providers: [],
   templateUrl: './dashboard-layout.component.html',
   styleUrl: './dashboard-layout.component.scss'
 })
-export class DashboardLayoutComponent implements OnInit{
+export class DashboardLayoutComponent implements OnInit {
   isCollapsed = false;
   userConnected: any;
-  notifications: string[] = [];
-  constructor(private srvShared: SharedService,private srv:DashboardService) {
+  notifications: any[] = [];
+  constructor(private srvShared: SharedService, private srv: DashboardService) {
     this.userConnected = this.srvShared.getUser();
   }
 
@@ -28,9 +29,16 @@ export class DashboardLayoutComponent implements OnInit{
     // this.socket.on('message', (message: string) => {
     //   this.notifications.push(message);
     // });
+    this.getNotifications()
   }
 
-  logout(){
+  logout() {
     this.srvShared.logoutUser();
+  }
+
+  getNotifications() {
+    this.srv.getMessages().subscribe((data: any) => {
+      this.notifications.push(data);
+    });
   }
 }

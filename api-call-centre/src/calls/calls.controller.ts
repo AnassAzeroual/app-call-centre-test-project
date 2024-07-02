@@ -16,7 +16,6 @@ export class CallsController {
 
     @Get(':id')
     getCallById(@Param('id') id: number): Promise<CreateCallDto> {
-        console.log(id)
         return this.callsService.getCallById(id);
     }
 

@@ -58,7 +58,6 @@ export class CommentsComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('is here');
     
     this.isSubmitted = true;
     if(!this.formTicketComments.valid) return

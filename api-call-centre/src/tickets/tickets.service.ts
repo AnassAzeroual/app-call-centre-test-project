@@ -21,8 +21,6 @@ export class TicketsService {
     const respons = [];
     if (tickets) {
       for (const ticket of tickets) {
-        console.log(ticket.assignedToUserId);
-
         respons.push({
           ...ticket,
           createdByUser: await this.repoUsers.findOne({
@@ -74,7 +72,7 @@ export class TicketsService {
     tempNotif.subject = `${userData.firstName} ${userData.lastName} a créé un ticket pour l'appel ID : ${ticket.callId}`;
     tempNotif.date = new Date();
     this.repoNotifications.save(tempNotif)
-    // this.notificationGateway.sendNotification(JSON.stringify(tempNotif));
+    this.notificationGateway.setEventNotifications(tempNotif);
     return await this.repoTicket.save(ticket);
   }
 

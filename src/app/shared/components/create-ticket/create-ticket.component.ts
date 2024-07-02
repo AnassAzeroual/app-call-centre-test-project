@@ -34,7 +34,6 @@ export class CreateTicketComponent implements OnInit {
   @Input('callId') set newCallId(callId: number) {
     this.callId = callId;
     this.ticketForm.patchValue({ callId: callId });
-    console.log(callId);
   }
   ticketForm!: FormGroup;
   isSubmitTicketForm: boolean = false;
@@ -51,9 +50,9 @@ export class CreateTicketComponent implements OnInit {
       callId: new FormControl(this.callId, [Validators.required]),
       ticketStatus: new FormControl('', [Validators.required]),
       sujet: new FormControl('', [Validators.required]),
-      associateTo: new FormControl(null),
+      associateTo: new FormControl(this.srvShared.getUser()?.id),
     });
-    
+
     if (this.route.snapshot.paramMap.get('id')) {
       this.callId = Number(this.route.snapshot.paramMap.get('id'));
       this.ticketForm.patchValue({ callId: this.callId });
@@ -84,7 +83,9 @@ export class CreateTicketComponent implements OnInit {
         assignedToUserId: this.ticketForm.get('associateTo')?.value,
       };
       this.srvTicket.createTicket(data).subscribe((res) => {
-        this.ticketForm.reset();
+        this.ticketForm.get('ticketStatus')?.setValue('');
+        this.ticketForm.get('sujet')?.setValue('');
+        this.ticketForm.get('associateTo')?.setValue(null);
         this.isSubmitTicketForm = false;
         this.srvShared.notification(
           'success',
