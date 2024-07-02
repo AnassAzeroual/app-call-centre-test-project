@@ -36,8 +36,13 @@
                  [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
               ></span>
           </span>
-          <div (click)="logout()" nzTooltipTitle="Se déconnecter" nz-tooltip class="logout">
-            <span nz-icon nzType="logout" nzTheme="outline" ></span> {{userConnected.name}} ( <span [ngStyle]="{'color':userConnected.role === '1' ? 'green' : 'red' }">{{userConnected.role == 1 ? 'Agent':'Supervisor'}}</span> )
+          <div class="user-zone">
+            <div class="notification" [ngStyle]="{'color': 2 ? 'red':'black'}">
+              2<span nz-icon nzType="notification" nzTheme="outline" ></span>
+            </div>
+            <div (click)="logout()" nzTooltipTitle="Se déconnecter" nz-tooltip class="logout">
+              <span nz-icon nzType="logout" nzTheme="outline" ></span> {{userConnected.name}} ( <span [ngStyle]="{'color':userConnected.role === '1' ? 'green' : 'red' }">{{userConnected.role == 1 ? 'Agent':'Supervisor'}}</span> )
+            </div>
           </div>
         </div>
       </nz-header>

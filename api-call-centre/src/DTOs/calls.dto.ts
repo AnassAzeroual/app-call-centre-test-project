@@ -24,6 +24,9 @@ export class CreateCallDto {
   @IsString()
   phoneNumber: string;
 
+  @IsNumber()
+  createdByUserId: number;
+
   @IsBoolean()
   deleted: boolean = false;
 }

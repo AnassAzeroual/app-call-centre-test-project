@@ -9,6 +9,9 @@ export class Calls {
   @Column("datetime", { name: "call_date" })
   callDate: Date;
 
+  @Column("int", { name: "created_by_user_id" })
+  createdByUserId: number;
+
   @Column("int", { name: "call_duration" })
   callDuration: number;
 

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Notifications } from 'entities/Notifications';
 import { Tickets } from 'entities/Tickets';
 import { Users } from 'entities/Users';
 import { CreateTicketDto } from 'src/DTOs/tickets.dto';
@@ -10,6 +11,7 @@ export class TicketsService {
   constructor(
     @InjectRepository(Tickets) private repoTicket: Repository<Tickets>,
     @InjectRepository(Users) private repoUsers: Repository<Users>,
+    @InjectRepository(Notifications) private repoNotifications: Repository<Notifications>,
   ) {}
 
   async getTickets(): Promise<Tickets[]> {
@@ -61,13 +63,19 @@ export class TicketsService {
   }
 
   async createTicket(ticket: CreateTicketDto): Promise<CreateTicketDto> {
+    let tempNotif = this.repoNotifications.create();
+    const userData = await this.repoUsers.findOne({where:{userId:ticket.createdByUserId}});
+    tempNotif.createdByUserId = userData.userId;
+    tempNotif.ticketType = `création de ticket`;
+    tempNotif.email = userData.email;
+    tempNotif.readed = false;
+    tempNotif.subject = `${userData.firstName} ${userData.lastName} a créé un ticket pour l'appel ID : ${ticket.callId}`;
+    tempNotif.date = new Date();
+    this.repoNotifications.save(tempNotif)
     return await this.repoTicket.save(ticket);
   }
 
-  async updateTicket(
-    id: number,
-    newData: Partial<UpdateTicketDto>,
-  ): Promise<UpdateTicketDto | undefined> {
+  async updateTicket(id: number,newData: Partial<UpdateTicketDto>): Promise<UpdateTicketDto | undefined> {
     const data = await this.repoTicket.findOne({ where: { ticketId: id } });
 
     Object.keys(newData).forEach((key) => {
@@ -75,6 +83,15 @@ export class TicketsService {
     });
 
     const res = await this.repoTicket.save(data);
+    let tempNotif = this.repoNotifications.create();
+    const userData = await this.repoUsers.findOne({where:{userId:data.createdByUserId}});
+    tempNotif.createdByUserId = userData.userId;
+    tempNotif.ticketType = `modification de ticket`;
+    tempNotif.email = userData.email;
+    tempNotif.readed = false;
+    tempNotif.subject = `${userData.firstName} ${userData.lastName} a modifier un ticket pour l'appel ID : ${data.callId}`;
+    tempNotif.date = new Date();
+    this.repoNotifications.save(tempNotif)
     return res;
   }
 }

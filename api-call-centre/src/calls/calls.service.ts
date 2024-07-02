@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Calls } from 'entities/Calls';
+import { Notifications } from 'entities/Notifications';
 import { Tickets } from 'entities/Tickets';
+import { Users } from 'entities/Users';
 import { CreateCallDto } from 'src/DTOs/calls.dto';
 import { UpdateCallDto } from 'src/DTOs/update.dto';
 import { Repository } from 'typeorm';
@@ -11,7 +13,9 @@ import { Repository } from 'typeorm';
 export class CallsService {
     constructor(
         @InjectRepository(Calls) private repoCalls: Repository<Calls>,
-        @InjectRepository(Tickets) private repoTickets: Repository<Tickets>,
+        @InjectRepository(Tickets) private repoTicket: Repository<Tickets>,
+        @InjectRepository(Users) private repoUsers: Repository<Users>,
+        @InjectRepository(Notifications) private repoNotifications: Repository<Notifications>
     ) { }
 
     async getAllCalls(): Promise<CreateCallDto[]> {
@@ -22,11 +26,11 @@ export class CallsService {
             for (const call of calls) {
                 response.push({
                     ...call,
-                    callTickets: await this.repoTickets
-                    .createQueryBuilder('ticket')
-                    .innerJoin('ticket.call', 'c')
-                    .where('c.phoneNumber = :phoneNumber', { phoneNumber: call.phoneNumber })
-                    .getCount()
+                    callTickets: await this.repoTicket
+                        .createQueryBuilder('ticket')
+                        .innerJoin('ticket.call', 'c')
+                        .where('c.phoneNumber = :phoneNumber', { phoneNumber: call.phoneNumber })
+                        .getCount()
                 })
             }
         }
@@ -39,6 +43,17 @@ export class CallsService {
 
     async createCall(call: CreateCallDto): Promise<CreateCallDto> {
         const tempCall = this.repoCalls.create(call);
+        let tempNotif = this.repoNotifications.create();
+        const userData = await this.repoUsers.findOne({ where: { userId: call.createdByUserId } });
+        if (userData) {
+            tempNotif.createdByUserId = userData.userId;
+            tempNotif.ticketType = `création d'appel`;
+            tempNotif.email = userData.email;
+            tempNotif.readed = false;
+            tempNotif.subject = `${userData.firstName} ${userData.lastName} a créé un appel pour le numéro : ${call.phoneNumber}`;
+            tempNotif.date = new Date();
+            this.repoNotifications.save(tempNotif)
+        }
         return await this.repoCalls.save(tempCall);
     }
 
@@ -50,6 +65,19 @@ export class CallsService {
         });
 
         const res = await this.repoCalls.save(data)
+
+        let tempNotif = this.repoNotifications.create();
+        const userData = await this.repoUsers.findOne({ where: { userId: data.createdByUserId } });
+        if (userData) {
+            tempNotif.createdByUserId = userData.userId;
+            tempNotif.ticketType = `modification d'appel`;
+            tempNotif.email = userData.email;
+            tempNotif.readed = false;
+            tempNotif.subject = `${userData.firstName} ${userData.lastName} a modifier un appel pour le numéro : ${data.phoneNumber}`;
+            tempNotif.date = new Date();
+            this.repoNotifications.save(tempNotif)
+        }
+
         return res
     }
 

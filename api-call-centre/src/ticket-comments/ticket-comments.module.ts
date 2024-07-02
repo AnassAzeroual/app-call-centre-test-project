@@ -6,11 +6,12 @@ import { TicketCommentsController } from './ticket-comments.controller';
 import { TicketCommentsService } from './ticket-comments.service';
 import { Tickets } from 'entities/Tickets';
 import { Users } from 'entities/Users';
+import { Notifications } from 'entities/Notifications';
 
 @Module({
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
-    TypeOrmModule.forFeature([TicketComments, Tickets, Users]),
+    TypeOrmModule.forFeature([TicketComments, Tickets, Users,Notifications]),
   ],
   controllers: [TicketCommentsController],
   providers: [TicketCommentsService],

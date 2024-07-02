@@ -32,6 +32,9 @@ export class Notifications {
   @Column("int", { name: "created_by_user_id" })
   createdByUserId: number;
 
+  @Column("boolean", { name: "readed" })
+  readed: boolean = false;
+
   @ManyToOne(() => Users, (users) => users.notifications, {
     onDelete: "RESTRICT",
     onUpdate: "RESTRICT",
