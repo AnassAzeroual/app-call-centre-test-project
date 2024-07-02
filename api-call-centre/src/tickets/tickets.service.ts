@@ -5,6 +5,7 @@ import { Tickets } from 'entities/Tickets';
 import { Users } from 'entities/Users';
 import { CreateTicketDto } from 'src/DTOs/tickets.dto';
 import { UpdateTicketDto } from 'src/DTOs/update.dto';
+import { NotificationGateway } from 'src/notification/notification.gateway';
 import { Repository } from 'typeorm';
 @Injectable()
 export class TicketsService {
@@ -12,6 +13,7 @@ export class TicketsService {
     @InjectRepository(Tickets) private repoTicket: Repository<Tickets>,
     @InjectRepository(Users) private repoUsers: Repository<Users>,
     @InjectRepository(Notifications) private repoNotifications: Repository<Notifications>,
+    private notificationGateway:NotificationGateway
   ) {}
 
   async getTickets(): Promise<Tickets[]> {
@@ -72,6 +74,7 @@ export class TicketsService {
     tempNotif.subject = `${userData.firstName} ${userData.lastName} a créé un ticket pour l'appel ID : ${ticket.callId}`;
     tempNotif.date = new Date();
     this.repoNotifications.save(tempNotif)
+    // this.notificationGateway.sendNotification(JSON.stringify(tempNotif));
     return await this.repoTicket.save(ticket);
   }
 

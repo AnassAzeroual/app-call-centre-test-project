@@ -1,24 +1,33 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { SharedService } from '../../shared/services/shared.service';
-import { ListNgZorroAntdModule } from '../../shared/list-ng-zorro-antd.module';
+import { SharedModule } from '../../shared/shared.module';
+import { DashboardService } from './dashboard.service';
 
 @Component({
   selector: 'app-dashboard-layout',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink, NzIconModule, NzLayoutModule, NzMenuModule,ListNgZorroAntdModule],
+  imports: [CommonModule, RouterOutlet, RouterLink, NzIconModule, NzLayoutModule, NzMenuModule,SharedModule],
+  providers:[],
   templateUrl: './dashboard-layout.component.html',
   styleUrl: './dashboard-layout.component.scss'
 })
-export class DashboardLayoutComponent {
+export class DashboardLayoutComponent implements OnInit{
   isCollapsed = false;
   userConnected: any;
-  constructor(private srvShared: SharedService) {
+  notifications: string[] = [];
+  constructor(private srvShared: SharedService,private srv:DashboardService) {
     this.userConnected = this.srvShared.getUser();
+  }
+
+  ngOnInit(): void {
+    // this.socket.on('message', (message: string) => {
+    //   this.notifications.push(message);
+    // });
   }
 
   logout(){
